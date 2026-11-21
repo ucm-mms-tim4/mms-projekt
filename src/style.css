@@ -3,7 +3,14 @@ body {
   margin: 0;
   height: 100%;
   overflow: hidden;
+  background: #000;
+  color: #fff;
   font-family: system-ui, sans-serif;
+}
+
+/* .screen sets display: flex, which would otherwise beat the hidden attribute. */
+[hidden] {
+  display: none !important;
 }
 
 #game {
@@ -13,19 +20,85 @@ body {
   touch-action: none;
 }
 
-.overlay {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  color: #fff;
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: rgb(0 0 0 / 70%);
+  text-align: center;
 }
 
-.overlay h1 {
-  margin: 0 0 1rem;
+/* Opaque, so the last frame of a finished game does not show through. */
+#menu,
+#loading {
+  background: #000;
 }
 
-.overlay button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+.screen h1,
+.screen h2,
+.screen p {
+  margin: 0;
+}
+
+.screen button {
+  min-width: 12rem;
+  padding: 0.6rem 1.2rem;
+  font: inherit;
+  font-size: 1.1rem;
   cursor: pointer;
+}
+
+.controls {
+  opacity: 0.7;
+}
+
+.warning {
+  max-width: 32rem;
+  color: #ffc857;
+}
+
+.objective {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  margin: 0;
+  text-shadow: 0 1px 2px #000;
+}
+
+.crosshair {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 70%);
+  pointer-events: none;
+}
+
+.mouse-hint {
+  position: fixed;
+  bottom: 3rem;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  text-shadow: 0 1px 2px #000;
+  pointer-events: none;
+}
+
+.dev-label {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.5rem;
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  opacity: 0.35;
+  pointer-events: none;
 }

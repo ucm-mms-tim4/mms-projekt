@@ -7,10 +7,46 @@
   </head>
   <body>
     <canvas id="game"></canvas>
-    <div class="overlay">
+
+    <section id="menu" class="screen">
       <h1>Únik zo základne</h1>
-      <button id="hello" type="button">Vyskúšaj ma</button>
-    </div>
+      <button id="start-button" type="button">Začať hru</button>
+      <p class="controls">
+        Pohyb: W A S D alebo šípky · Rozhliadanie: myš · Pauza: Esc
+      </p>
+      <p id="gpu-warning" class="warning" hidden>
+        Hra beží bez grafickej karty, preto pôjde pomaly. V nastaveniach
+        prehliadača zapni grafickú akceleráciu a prehliadač reštartuj.
+      </p>
+    </section>
+
+    <section id="loading" class="screen" hidden>
+      <p id="loading-text">Načítava sa…</p>
+    </section>
+
+    <section id="hud" hidden>
+      <p class="objective">Cieľ: dostaň sa k núdzovému poklopu.</p>
+      <div class="crosshair"></div>
+      <p id="mouse-hint" class="mouse-hint" hidden>
+        Kliknutím do hry zapneš ovládanie myšou.
+      </p>
+    </section>
+
+    <section id="pause" class="screen" hidden>
+      <h2>Pauza</h2>
+      <button id="resume-button" type="button">Pokračovať</button>
+      <button id="quit-button" type="button">Hlavné menu</button>
+    </section>
+
+    <section id="finish" class="screen" hidden>
+      <h2>Miestnosť 1 je za tebou</h2>
+      <p>Toto je zatiaľ koniec vývojovej verzie.</p>
+      <button id="again-button" type="button">Hrať znova</button>
+      <button id="menu-button" type="button">Hlavné menu</button>
+    </section>
+
+    <p class="dev-label">VÝVOJOVÁ VERZIA</p>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

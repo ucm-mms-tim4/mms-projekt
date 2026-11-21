@@ -1,22 +1,17 @@
 import { Engine } from "@babylonjs/core/Engines/engine";
-import { createScene } from "./scene";
+import { SceneLoaderFlags } from "@babylonjs/core/Loading/sceneLoaderFlags";
+import { registerBuiltInLoaders } from "@babylonjs/loaders/dynamic";
+import { Game } from "./game";
 import "./style.css";
 
+// The glTF loader is downloaded only when the first model loads.
+registerBuiltInLoaders();
+// The game has its own loading screen.
+SceneLoaderFlags.ShowLoadingScreen = false;
+
 const canvas = document.querySelector<HTMLCanvasElement>("#game");
-const button = document.querySelector<HTMLButtonElement>("#hello");
-if (!canvas || !button) {
-  throw new Error("Missing #game canvas or #hello button in index.html");
+if (!canvas) {
+  throw new Error("Missing #game canvas in index.html");
 }
 
-const engine = new Engine(canvas, true);
-const scene = createScene(engine);
-engine.runRenderLoop(() => {
-  scene.render();
-});
-window.addEventListener("resize", () => {
-  engine.resize();
-});
-
-button.addEventListener("click", () => {
-  alert("Ahoj! Všetko funguje.");
-});
+new Game(new Engine(canvas, true), canvas);
