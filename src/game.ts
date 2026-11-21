@@ -1,6 +1,7 @@
 import type { Engine } from "@babylonjs/core/Engines/engine";
 import { Input } from "./input";
 import { loadRoom1, type Room1 } from "./levels/room1";
+import { isSoftwareRenderer } from "./renderer";
 
 type State = "menu" | "loading" | "playing" | "paused" | "finished";
 
@@ -36,6 +37,9 @@ export class Game {
     canvas: HTMLCanvasElement,
   ) {
     this.input = new Input(canvas);
+    element("gpu-warning").hidden = !isSoftwareRenderer(
+      engine.getGlInfo().renderer,
+    );
 
     element("start-button").addEventListener("click", () => {
       void this.start();

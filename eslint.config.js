@@ -29,5 +29,9 @@ export default defineConfig(
     files: ["**/*.js"],
     extends: [tseslint.configs.disableTypeChecked],
   },
+  {
+    files: ["scripts/**"],
+    languageOptions: { globals: globals.node },
+  },
   prettier,
 );

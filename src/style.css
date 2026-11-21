@@ -56,6 +56,11 @@ body {
   opacity: 0.7;
 }
 
+.warning {
+  max-width: 32rem;
+  color: #ffc857;
+}
+
 .objective {
   position: fixed;
   top: 1rem;

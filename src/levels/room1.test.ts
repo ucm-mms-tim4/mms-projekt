@@ -6,7 +6,7 @@ import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { MOUSE_SENSITIVITY } from "../player";
 import { loadRoom1 } from "./room1";
 
-const model = readFileSync("src/assets/models/room1-cryochamber.glb");
+const model = readFileSync("src/assets/models/room1-cryochamber-optimized.glb");
 const STEP = 1 / 60;
 const noLook = { x: 0, y: 0 };
 const still = { forward: 0, right: 0, up: 0, fast: false };

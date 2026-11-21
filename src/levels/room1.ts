@@ -6,7 +6,7 @@ import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
 import { Player } from "../player";
-import roomUrl from "../assets/models/room1-cryochamber.glb?url";
+import roomUrl from "../assets/models/room1-cryochamber-optimized.glb?url";
 
 // The glTF loader mirrors the X axis, so in Babylon the capsule is at +X
 // and the hatch at -X (the opposite of the Blender file).
@@ -31,8 +31,14 @@ export async function loadRoom1(
   scene.clearColor = new Color4(0, 0, 0, 1);
   await AppendSceneAsync(source, scene, { pluginExtension: ".glb" });
 
+  // Each pixel pays for 4 lights, and many surfaces overlap on screen.
+  // Drawing depth first means each visible pixel is lit only once.
   for (const mesh of scene.meshes) {
     mesh.checkCollisions = true;
+    const material = mesh.material;
+    if (material && !material.needAlphaBlendingForMesh(mesh)) {
+      material.needDepthPrePass = true;
+    }
   }
   addLights(scene);
 
