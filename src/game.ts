@@ -82,6 +82,14 @@ export class Game {
       this.room?.scene.render();
     });
 
+    // Dev tools exist only on the dev server. The build drops this import,
+    // so the live site does not contain them at all.
+    if (import.meta.env.DEV) {
+      void import("./dev/devTools").then(({ DevTools }) => {
+        new DevTools(engine, () => this.room);
+      });
+    }
+
     engine.runRenderLoop(() => {
       this.frame();
     });
@@ -94,7 +102,8 @@ export class Game {
     }
     const dt = Math.min(this.engine.getDeltaTime() / 1000, MAX_FRAME_TIME);
     this.room.player.update(this.input.moveAxes(), this.input.takeLook(), dt);
-    if (this.room.reachedExit()) {
+    // Flying over the hatch in noclip (dev tools) should not end the room.
+    if (!this.room.player.noclip && this.room.reachedExit()) {
       this.finish();
       return;
     }

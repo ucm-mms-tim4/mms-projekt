@@ -3,12 +3,14 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { Scene } from "@babylonjs/core/scene";
 import "@babylonjs/core/Collisions/collisionCoordinator";
-import { walkStep, type MoveAxes } from "./movement";
+import { flyStep, walkStep, type MoveAxes } from "./movement";
 
 const EYE_HEIGHT = 1.6;
 const WALK_SPEED = 2; // m/s
 export const MOUSE_SENSITIVITY = 0.002; // radians per pixel
 const MAX_PITCH = 1.4; // about 80 degrees up or down
+const FLY_SPEED = 4; // m/s, noclip only
+const FLY_FAST = 3; // speed multiplier with Shift
 
 // The collider floats this high above the floor, so cables and low debris
 // do not block the player. The floor is flat, so there is no gravity.
@@ -21,6 +23,7 @@ export class Player {
   private readonly camera: FreeCamera;
   private yaw: number;
   private pitch = 0;
+  private flying = false;
 
   constructor(scene: Scene, start: Vector3, yaw: number) {
     this.yaw = yaw;
@@ -47,11 +50,41 @@ export class Player {
     return this.body.position;
   }
 
+  get facing(): number {
+    return this.yaw;
+  }
+
+  // Noclip: fly anywhere, no collisions.
+  get noclip(): boolean {
+    return this.flying;
+  }
+
+  set noclip(on: boolean) {
+    this.flying = on;
+    if (!on) {
+      this.body.position.y = 0;
+    }
+  }
+
+  teleport(position: Vector3, yaw: number) {
+    this.body.position.copyFrom(position);
+    this.yaw = yaw;
+    this.pitch = 0;
+    this.applyRotation();
+  }
+
   update(axes: MoveAxes, look: { x: number; y: number }, dt: number) {
     this.yaw += look.x * MOUSE_SENSITIVITY;
     this.pitch += look.y * MOUSE_SENSITIVITY;
     this.pitch = Math.min(MAX_PITCH, Math.max(-MAX_PITCH, this.pitch));
     this.applyRotation();
+
+    if (this.flying) {
+      const speed = FLY_SPEED * (axes.fast ? FLY_FAST : 1);
+      const fly = flyStep(axes, this.yaw, this.pitch, speed * dt);
+      this.body.position.addInPlaceFromFloats(fly.x, fly.y, fly.z);
+      return;
+    }
 
     const step = walkStep(axes, this.yaw, WALK_SPEED * dt);
     if (step.x === 0 && step.z === 0) {

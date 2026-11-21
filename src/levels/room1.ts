@@ -17,6 +17,8 @@ const EXIT_RADIUS = 1; // m, measured on the floor from the hatch center
 export interface Room1 {
   scene: Scene;
   player: Player;
+  spawn: { position: Vector3; yaw: number };
+  exit: Vector3;
   reachedExit(): boolean;
 }
 
@@ -42,6 +44,8 @@ export async function loadRoom1(
   return {
     scene,
     player,
+    spawn: { position: START, yaw: START_YAW },
+    exit: hatch,
     reachedExit: () =>
       Math.hypot(player.position.x - hatch.x, player.position.z - hatch.z) <
       EXIT_RADIUS,

@@ -19,6 +19,10 @@ export default defineConfig(
     rules: {
       // Babylon builds classes like StandardMaterial from mixins, which this rule reports as non-instances.
       "@typescript-eslint/no-unsafe-class-instance-assignment": "off",
+      "@typescript-eslint/restrict-template-expressions": [
+        "error",
+        { allowNumber: true },
+      ],
     },
   },
   {

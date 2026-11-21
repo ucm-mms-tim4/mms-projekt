@@ -1,0 +1,14 @@
+#dev-tools {
+  position: fixed;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  background: rgb(0 0 0 / 75%);
+  color: #9f9;
+  font:
+    12px/1.4 ui-monospace,
+    monospace;
+  pointer-events: none;
+}
