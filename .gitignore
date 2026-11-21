@@ -55,3 +55,6 @@ coverage/
 .env
 .env.*
 !.env.example
+
+.claude/
+CLAUDE.md
