@@ -11,10 +11,16 @@ importers:
       '@babylonjs/core':
         specifier: ^9.37.1
         version: 9.37.1
+      '@babylonjs/loaders':
+        specifier: ^9.37.1
+        version: 9.37.1(@babylonjs/core@9.37.1)(babylonjs-gltf2interface@9.37.1)
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.15.0)
+      '@types/node':
+        specifier: ^26.6.6
+        version: 26.6.6
       eslint:
         specifier: ^10.15.0
         version: 10.15.0
@@ -35,15 +41,21 @@ importers:
         version: 8.73.0(eslint@10.15.0)(typescript@6.0.3)
       vite:
         specifier: ^8.3.8
-        version: 8.3.8
+        version: 8.3.8(@types/node@26.6.6)
       vitest:
         specifier: ^5.1.1
-        version: 5.1.1(vite@8.3.8)
+        version: 5.1.1(@types/node@26.6.6)(vite@8.3.8(@types/node@26.6.6))
 
 packages:
 
   '@babylonjs/core@9.37.1':
     resolution: {integrity: sha512-OABdYAU5FvCGmIHj6zpfK+LTLJc8zUpKOhI0QNkDYyXy2P5ROA2dnUxfZCeR/TL1oNVnS/H4w/uUSt9GHDFZWQ==}
+
+  '@babylonjs/loaders@9.37.1':
+    resolution: {integrity: sha512-PFF/cddwpXoBPDiKowb3i30tMVc1JuQR+CGGVEK4E4SwaxYhinGrBclsnBpO2iZF5K56V/1e885fSspGGLijrw==}
+    peerDependencies:
+      '@babylonjs/core': ^9.0.0
+      babylonjs-gltf2interface: ^9.0.0
 
   '@cacheable/memory@2.2.0':
     resolution: {integrity: sha512-CTLKqLItRCEixEAewD3/j9DB3/o96gpTPD4eJ1v+DGOlxZRZncRQkGYqqnAGCscYd6RNeXfGeiuCphsPtqyIfQ==}
@@ -273,6 +285,9 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
+  '@types/node@26.6.6':
+    resolution: {integrity: sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog==}
+
   '@typescript-eslint/eslint-plugin@8.73.0':
     resolution: {integrity: sha512-UkygMFer53Yzn29MCYFTHf34hGXf5KJhiDWfIm1tXtXRrym1CS6l5H9Y3yCtPWChpC0/f93H88gdj8tN0dd4kw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -366,6 +381,9 @@ packages:
   assertion-error@2.0.1:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
     engines: {node: '>=12'}
+
+  babylonjs-gltf2interface@9.37.1:
+    resolution: {integrity: sha512-hnL++PQDlXZ07NcbImt4KValkqFdknsC+PxFISj9jpMuRRYtVv5pvjPt15e2Y/cth304nswQKPccN5CV2tR68A==}
 
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
@@ -764,6 +782,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  undici-types@8.9.0:
+    resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
+
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
@@ -872,6 +893,11 @@ packages:
 snapshots:
 
   '@babylonjs/core@9.37.1': {}
+
+  '@babylonjs/loaders@9.37.1(@babylonjs/core@9.37.1)(babylonjs-gltf2interface@9.37.1)':
+    dependencies:
+      '@babylonjs/core': 9.37.1
+      babylonjs-gltf2interface: 9.37.1
 
   '@cacheable/memory@2.2.0':
     dependencies:
@@ -1051,6 +1077,10 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
+  '@types/node@26.6.6':
+    dependencies:
+      undici-types: 8.9.0
+
   '@typescript-eslint/eslint-plugin@8.73.0(@typescript-eslint/parser@8.73.0(eslint@10.15.0)(typescript@6.0.3))(eslint@10.15.0)(typescript@6.0.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.3
@@ -1146,14 +1176,14 @@ snapshots:
       '@typescript-eslint/types': 8.73.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/mocker@5.1.1(vite@8.3.8)':
+  '@vitest/mocker@5.1.1(vite@8.3.8(@types/node@26.6.6))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.1.1
       estree-walker: 3.0.3
       magic-string: 1.4.5
     optionalDependencies:
-      vite: 8.3.8
+      vite: 8.3.8(@types/node@26.6.6)
 
   '@vitest/spy@5.1.1': {}
 
@@ -1171,6 +1201,8 @@ snapshots:
       uri-js: 4.4.1
 
   assertion-error@2.0.1: {}
+
+  babylonjs-gltf2interface@9.37.1: {}
 
   balanced-match@4.0.4: {}
 
@@ -1530,11 +1562,13 @@ snapshots:
 
   typescript@6.0.3: {}
 
+  undici-types@8.9.0: {}
+
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
 
-  vite@8.3.8:
+  vite@8.3.8(@types/node@26.6.6):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -1542,12 +1576,13 @@ snapshots:
       rolldown: 1.2.19
       tinyglobby: 0.2.17
     optionalDependencies:
+      '@types/node': 26.6.6
       fsevents: 2.3.3
 
-  vitest@5.1.1(vite@8.3.8):
+  vitest@5.1.1(@types/node@26.6.6)(vite@8.3.8(@types/node@26.6.6)):
     dependencies:
       '@types/chai': 5.2.3
-      '@vitest/mocker': 5.1.1(vite@8.3.8)
+      '@vitest/mocker': 5.1.1(vite@8.3.8(@types/node@26.6.6))
       chai: 6.3.0
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
@@ -1558,8 +1593,10 @@ snapshots:
       tinybench: 6.2.4
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
-      vite: 8.3.8
+      vite: 8.3.8(@types/node@26.6.6)
       why-is-node-running: 3.2.1
+    optionalDependencies:
+      '@types/node': 26.6.6
     transitivePeerDependencies:
       - msw
 
